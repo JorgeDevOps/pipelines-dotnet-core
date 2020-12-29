@@ -7,11 +7,23 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-18.04' # example of other options:'macOS-10.15,', 'windows-2019'
 
 variables:
   buildConfiguration: 'Release'
 
+#steps:
+#- script: dotnet build --configuration $(buildConfiguration)
+#  displayName: 'dotnet build $(buildConfiguration)'
+
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- task: UseDotNet@2
+  inputs:
+    version: '5.0.x'
+    performMultiLevelLookup: true
+    includePreviewVersions: true
+- task: UseDotNet@2
+  inputs:
+    version: '3.0.x'
+    packageType: runtime
+    
